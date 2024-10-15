@@ -16,6 +16,7 @@
 	<modules>
 		<module>dataaccess</module>
 		<module>auth</module>
+		<module>library</module>
 	</modules>
 	<packaging>pom</packaging>
 	<url/>

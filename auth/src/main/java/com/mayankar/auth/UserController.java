@@ -1,7 +1,7 @@
 package com.mayankar.auth;
 
-import com.mayankar.dataaccess.model.User;
 import com.mayankar.dataaccess.repository.UserRepository;
+import com.mayankar.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
