@@ -1,13 +1,13 @@
-package com.mayankar.ibento;
+package com.mayankar.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class IbentoApplicationTests {
+class AuthApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

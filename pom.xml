@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<modules>
 		<module>dataaccess</module>
+		<module>auth</module>
 	</modules>
 	<packaging>pom</packaging>
 	<url/>
