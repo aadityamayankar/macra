@@ -1,3 +1,4 @@
+# @TODO: Invalidate ANY / ALL creds
 spring:
   application:
     name: auth
