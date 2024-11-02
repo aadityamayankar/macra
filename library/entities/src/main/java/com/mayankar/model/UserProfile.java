@@ -7,15 +7,12 @@ import lombok.Data;
 
 @Data
 @NoArgsConstructor
-@Table("user")
-public class User {
-
+@Table("user_profile")
+public class UserProfile {
     @Id
     private Long id;
 
     private String name;
 
     private String email;
-
-    private String password;
 }
