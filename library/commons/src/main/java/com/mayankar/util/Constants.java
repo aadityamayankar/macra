@@ -11,4 +11,5 @@ public class Constants {
     public static final Long THIRTY_MINUTES_IN_SECONDS = 1800L;
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "Bearer"; // REMEMBER TO USE BEARER + " " + token
+    public static final Long OPS_USER_MISCFLAG = 1L<<30;
 }

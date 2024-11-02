@@ -13,4 +13,7 @@ public interface RoleProfileRepository extends ReactiveCrudRepository<RoleProfil
 
     @Query("SELECT * FROM role_profile WHERE value = :value")
     Mono<RoleProfile> getRoleProfileByValue(Integer value);
+
+    @Query("SELECT * FROM role_profile rp JOIN user_role_assignment ura ON rp.id = ura.role_id WHERE ura.user_id = :userId")
+    Mono<RoleProfile> getRoleProfileByUserId(Long userId);
 }

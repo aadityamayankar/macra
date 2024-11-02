@@ -17,7 +17,7 @@ spring:
           google:
             client-id: 996208298744-in3qbmgh9b9bh1d1ffofcia3ot29ra6o.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: "${ibento.baseurl}/oauth/callback"
+            redirect-uri: "${ibento.baseurl}/login/oauth2/code/google"
 ibento:
   authn:
     session:

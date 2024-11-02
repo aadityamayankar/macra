@@ -4,7 +4,6 @@ import com.mayankar.auth.service.*;
 import com.mayankar.dataaccess.cachedrepository.AuthnSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,11 +12,11 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/oauth")
-public class AuthController {
+@RequestMapping("login/oauth2")
+public class OAuthController {
 
     @Autowired
-    private AuthService authService;
+    private OAuthService OAuthService;
     @Autowired
     private UserProfileService userProfileService;
     @Autowired
@@ -29,14 +28,14 @@ public class AuthController {
     @Autowired
     private UserProfileWithDetailsService userProfileWithDetailsService;
 
-    @GetMapping("/callback")
-    public Mono<Void> callback(@RequestParam("code") String code,
+    @GetMapping("/code/google")
+    public Mono<Void> googleCallback(@RequestParam("code") String code,
                                         @RequestParam("scope") String scope,
                                         @RequestParam("authuser") String authuser,
                                         @RequestParam("prompt") String prompt,
                                         ServerWebExchange exchange
     ) {
-        return authService.exchangeCodeForToken(code)
+        return OAuthService.exchangeCodeForTokenGIAM(code)
                 .flatMap(authnToken -> {
                     return userProfileService.getUserDetailsGIAM(authnToken)
                             .flatMap(userDetailsGIAM -> userProfileService.upsertUser(userDetailsGIAM))

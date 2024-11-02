@@ -27,9 +27,12 @@ BEGIN
         FOREIGN KEY (role_id) REFERENCES role_profile(id)
     );
 
-    INSERT INTO role_profile (name, description, value) VALUES ('OPSADMIN', 'Operational System Administrator', 1);
-    INSERT INTO role_profile (name, description, value) VALUES ('USER', 'Regular User', 2);
-
+    CREATE TABLE IF NOT EXISTS user_password_info (
+        id BIGINT NOT NULL generated always as identity PRIMARY KEY,
+        user_id BIGINT NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES user_profile(id)
+    );
 END;
 $$
 LANGUAGE plpgsql;

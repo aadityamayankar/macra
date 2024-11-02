@@ -14,13 +14,13 @@ import reactor.core.publisher.Mono;
 import static com.mayankar.util.Constants.*;
 
 @Service
-public class AuthService {
+public class OAuthService {
     @Autowired
     ApiClient apiClient;
     @Autowired
     ConfigPropsService ConfigPropsService;
 
-    public Mono<AuthnToken> exchangeCodeForToken(String code) {
+    public Mono<AuthnToken> exchangeCodeForTokenGIAM(String code) {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add(CODE, code);
         formData.add(CLIENT_ID, ConfigPropsService.getGIAMClientId());
