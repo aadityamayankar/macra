@@ -1,9 +1,6 @@
 package com.mayankar.auth.api;
 
-import com.mayankar.auth.service.AuthService;
-import com.mayankar.auth.service.AuthnSessionService;
-import com.mayankar.auth.service.CookieService;
-import com.mayankar.auth.service.UserProfileService;
+import com.mayankar.auth.service.*;
 import com.mayankar.dataaccess.cachedrepository.AuthnSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
@@ -29,6 +26,8 @@ public class AuthController {
     private AuthnSessionRepository authnSessionRepository;
     @Autowired
     private CookieService cookieService;
+    @Autowired
+    private UserProfileWithDetailsService userProfileWithDetailsService;
 
     @GetMapping("/callback")
     public Mono<Void> callback(@RequestParam("code") String code,
@@ -41,6 +40,7 @@ public class AuthController {
                 .flatMap(authnToken -> {
                     return userProfileService.getUserDetailsGIAM(authnToken)
                             .flatMap(userDetailsGIAM -> userProfileService.upsertUser(userDetailsGIAM))
+                            .flatMap(userProfile -> userProfileWithDetailsService.getUserProfileWithDetails(userProfile))
                             .flatMap(user -> {
                                 return authnSessionService.createAuthnSession(user, authnToken);
                             })

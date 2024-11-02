@@ -1,9 +1,13 @@
 package com.mayankar.auth.service;
 
 import com.mayankar.auth.dto.UserDetailsGIAM;
+import com.mayankar.dataaccess.repository.RoleProfileRepository;
 import com.mayankar.dataaccess.repository.UserProfileRepository;
+import com.mayankar.dataaccess.repository.UserRoleAssignmentRepository;
+import com.mayankar.enums.UserRole;
 import com.mayankar.model.AuthnToken;
 import com.mayankar.model.UserProfile;
+import com.mayankar.model.UserRoleAssignment;
 import com.mayankar.util.ApiClient;
 import com.mayankar.util.UrlConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,10 @@ public class UserProfileService {
 
     @Autowired
     UserProfileRepository userProfileRepository;
+    @Autowired
+    private UserRoleAssignmentRepository userRoleAssignmentRepository;
+    @Autowired
+    private RoleProfileRepository roleProfileRepository;
 
     public Mono<UserDetailsGIAM> getUserDetailsGIAM(AuthnToken authnToken) {
         MultiValueMap<String, String> requestHeaders = new LinkedMultiValueMap<>();
@@ -45,6 +53,20 @@ public class UserProfileService {
                         userProfile.setEmail(userDetailsGIAM.getEmail());
                     }
                     return userProfileRepository.save(userProfile);
-                });
+                })
+                .flatMap(userProfile -> userRoleAssignmentRepository.findByUserId(userProfile.getId())
+                        .switchIfEmpty(Mono.just(new UserRoleAssignment()))
+                        .flatMap(userRoleAssignment -> {
+                            if (userRoleAssignment.getId() == null) {
+                                return roleProfileRepository.getRoleProfileByValue(UserRole.USER.getValue())
+                                        .flatMap(roleProfile -> {
+                                            userRoleAssignment.setUserId(userProfile.getId());
+                                            userRoleAssignment.setRoleId(roleProfile.getId());
+                                            return userRoleAssignmentRepository.save(userRoleAssignment);
+                                        });
+                            }
+                            return Mono.just(userRoleAssignment);
+                        })
+                        .then(Mono.just(userProfile)));
     }
 }

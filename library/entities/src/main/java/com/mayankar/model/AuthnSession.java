@@ -23,5 +23,5 @@ public class AuthnSession {
     private Instant createdAt;
     private Instant expiresAt;
     private Instant lastAccessedAt;
-    private boolean valid;
+    private Integer role;
 }
