@@ -6,16 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import static com.mayankar.util.CacheConstants.AUTHN_SESSION_PREFIX;
+
 @Repository
 public class AuthnSessionRepository {
     @Autowired
     ReactiveRedisService<AuthnSession> reactiveRedisService;
-    //@TODO: put the prefix as a constant
     public Mono<AuthnSession> save(AuthnSession authnSession) {
-        return reactiveRedisService.save("authn_session", authnSession.getId(), authnSession);
+        return reactiveRedisService.save(AUTHN_SESSION_PREFIX, authnSession.getId(), authnSession);
     }
 
     public Mono<AuthnSession> getSession(String id) {
-        return reactiveRedisService.get("authn_session", id, AuthnSession.class);
+        return reactiveRedisService.get(AUTHN_SESSION_PREFIX, id, AuthnSession.class);
     }
 }
