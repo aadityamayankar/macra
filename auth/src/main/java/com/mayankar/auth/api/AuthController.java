@@ -37,7 +37,6 @@ public class AuthController {
                                         @RequestParam("prompt") String prompt,
                                         ServerWebExchange exchange
     ) {
-        // exchange authorization code for access token
         return authService.exchangeCodeForToken(code)
                 .flatMap(authnToken -> {
                     return userProfileService.getUserDetailsGIAM(authnToken)
@@ -54,5 +53,10 @@ public class AuthController {
                     exchange.getResponse().addCookie(sessionCookie);
                     return Mono.empty();
                 });
+    }
+
+    @GetMapping("/test")
+    public Mono<String> test(ServerWebExchange exchange) {
+        return Mono.just("Test");
     }
 }

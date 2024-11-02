@@ -9,5 +9,18 @@ spring:
     redis:
       host: localhost
       port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 996208298744-in3qbmgh9b9bh1d1ffofcia3ot29ra6o.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: "${ibento.baseurl}/oauth/callback"
+ibento:
+  authn:
+    session:
+        timeout: 1800
+  baseurl: http://localhost:7001
 server:
   port: 7001

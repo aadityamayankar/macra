@@ -1,4 +1,4 @@
-package com.mayankar.model;
+package com.mayankar.util;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

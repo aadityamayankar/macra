@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import lombok.Data;
 
+import java.time.Instant;
+
 @Data
 @NoArgsConstructor
 @Table("user_profile")
@@ -15,4 +17,10 @@ public class UserProfile {
     private String name;
 
     private String email;
+
+    private Instant modifiedAt;
+
+    private Instant createdAt;
+
+    private Long miscflags;
 }
