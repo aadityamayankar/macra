@@ -17,11 +17,21 @@ spring:
           google:
             client-id: 996208298744-in3qbmgh9b9bh1d1ffofcia3ot29ra6o.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: "${ibento.baseurl}/oauth/callback"
+            redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/google"
+          self:
+            client-id: ibento
+            client-secret: password
+            redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/self"
 ibento:
   authn:
+    baseurl: http://localhost:7001
     session:
         timeout: 1800
-  baseurl: http://localhost:7001
+  authz:
+    code:
+      timeout: 300
+      secret: secret
+    refresh:
+      timeout: 21600
 server:
   port: 7001

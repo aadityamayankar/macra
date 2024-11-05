@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: authz
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 996208298744-in3qbmgh9b9bh1d1ffofcia3ot29ra6o.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/google"
+          self:
+            client-id: ibento
+            client-secret: $2a$10$RjU0BiGJ7m60WD2Q6X69jueuWcXWLRSeUAL1vVnkwoEC0mPYP7sji
+            redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/self"
+ibento:
+  authn:
+    baseurl: http://localhost:7001
+    session:
+      timeout: 1800
+  authz:
+    code:
+      timeout: 300
+      secret: 9b66d12ad7f4c5dd784f5e4bd1509312
+    refresh:
+      timeout: 21600
+server:
+  port: 6001

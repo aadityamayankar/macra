@@ -13,14 +13,9 @@ import java.time.Instant;
 public class UserProfile {
     @Id
     private Long id;
-
     private String name;
-
     private String email;
-
     private Instant modifiedAt;
-
     private Instant createdAt;
-
     private Long miscflags;
 }
