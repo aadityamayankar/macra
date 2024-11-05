@@ -8,23 +8,43 @@ BEGIN
     INSERT INTO user_profile (name, email, miscflags) VALUES ('opsadmin', 'opsadmin@ibento.com', 1<<30) RETURNING id INTO v_opsadmin_user_id;
     SELECT id INTO v_opsadmin_role_id FROM role_profile WHERE value = 1;
     INSERT INTO user_role_assignment (user_id, role_id) VALUES (v_opsadmin_user_id, v_opsadmin_role_id);
-    INSERT INTO user_password_info (user_id, password_hash) VALUES (v_opsadmin_user_id, 'opsadmin'); -- @TODO: hash this password
+    INSERT INTO user_password_info (user_id, password_hash) VALUES (v_opsadmin_user_id, '$2a$10$RJP5kiuGJ.jbqySGjzUqBenGjbBrBjB8h73Je4hfJZObCHreBYNNu'); -- password
 END;
 $$
 LANGUAGE plpgsql;
 
-
-CREATE OR REPLACE FUNCTION insert_initial_data()
-RETURNS void AS
+CREATE OR REPLACE FUNCTION insert_default_roles()
+RETURNS VOID AS
 $$
 BEGIN
     INSERT INTO role_profile (name, description, value) VALUES ('OPSADMIN', 'Operational System Administrator', 1) ON CONFLICT DO NOTHING;
     INSERT INTO role_profile (name, description, value) VALUES ('USER', 'Regular User', 2) ON CONFLICT DO NOTHING;
+END;
+$$
+LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION insert_oauth2_client()
+RETURNS VOID AS
+$$
+BEGIN
+    INSERT INTO oauth2_client (client_id, client_secret, redirect_uris, scopes) -- secret
+    VALUES ('ibento', '$2a$10$RJP5kiuGJ.jbqySGjzUqBenGjbBrBjB8h73Je4hfJZObCHreBYNNu', '{http://localhost:7001/login/oauth2/code/self}', '{read, write, openid}');
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION insert_initial_data()
+RETURNS VOID AS
+$$
+BEGIN
+    PERFORM insert_default_roles();
+    PERFORM insert_oauth2_client();
     PERFORM insert_opsadmin_user();
 END;
 $$
 LANGUAGE plpgsql;
 SELECT insert_initial_data();
 DROP FUNCTION insert_initial_data();
+DROP FUNCTION insert_default_roles();
+DROP FUNCTION insert_oauth2_client();
 DROP FUNCTION insert_opsadmin_user();

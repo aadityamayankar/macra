@@ -24,6 +24,10 @@ public class ReactiveRedisService <T> {
         return reactiveRedisOperations.opsForValue().set(getKey(prefix, id), value, Duration.ofSeconds(DEFAULT_EXPIRY)).thenReturn(value);
     }
 
+    public Mono<T> save(String prefix, String id, T value, Long expiry) {
+        return reactiveRedisOperations.opsForValue().set(getKey(prefix, id), value, Duration.ofSeconds(expiry)).thenReturn(value);
+    }
+
     public Mono<T> get(String prefix, String id, Class<T> type) {
         return reactiveRedisOperations.opsForValue().get(getKey(prefix, id))
                 .map(val -> ObjectMapperUtil.objectMapper(val, type));

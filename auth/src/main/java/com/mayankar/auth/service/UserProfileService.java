@@ -9,6 +9,7 @@ import com.mayankar.model.AuthnToken;
 import com.mayankar.model.UserProfile;
 import com.mayankar.model.UserRoleAssignment;
 import com.mayankar.util.ApiClient;
+import com.mayankar.util.CompositeID;
 import com.mayankar.util.UrlConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,9 @@ public class UserProfileService {
                             return Mono.just(userRoleAssignment);
                         })
                         .then(Mono.just(userProfile)));
+    }
+
+    public Mono<UserProfile> getUserProfile(String userId) {
+        return userProfileRepository.findById(CompositeID.parseIdString(userId));
     }
 }

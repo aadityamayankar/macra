@@ -1,7 +1,6 @@
-# @TODO: Invalidate ANY / ALL creds
 spring:
   application:
-    name: auth
+    name: authz
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -20,18 +19,18 @@ spring:
             redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/google"
           self:
             client-id: ibento
-            client-secret: password
+            client-secret: $2a$10$RjU0BiGJ7m60WD2Q6X69jueuWcXWLRSeUAL1vVnkwoEC0mPYP7sji
             redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/self"
 ibento:
   authn:
     baseurl: http://localhost:7001
     session:
-        timeout: 1800
+      timeout: 1800
   authz:
     code:
       timeout: 300
-      secret: secret
+      secret: 9b66d12ad7f4c5dd784f5e4bd1509312
     refresh:
       timeout: 21600
 server:
-  port: 7001
+  port: 6001

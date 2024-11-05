@@ -5,20 +5,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-@Table("user_role_assignment")
-public class UserRoleAssignment {
+@AllArgsConstructor
+@NoArgsConstructor
+@Table("oauth2_client")
+public class Oauth2Client {
     @Id
-    private Long id;
-    private Long userId;
-    private Long roleId;
+    private String id;
+    private String clientId;
+    private String clientSecret; //@TODO:
+    private List<String> redirectUris;
+    private List<String> scopes;
     private Instant modifiedAt;
     private Instant createdAt;
     private Long miscflags;
