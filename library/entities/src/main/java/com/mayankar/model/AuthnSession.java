@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Builder

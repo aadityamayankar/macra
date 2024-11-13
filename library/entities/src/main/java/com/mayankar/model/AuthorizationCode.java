@@ -17,11 +17,10 @@ import java.time.Instant;
 public class AuthorizationCode {
     @Id
     private String code;
-    private String userId; //@TODO: implement the user authentication
+    private String userId;
     private String clientId;
     private String redirectUri;
     private String scope;
     private Instant createdAt;
     private Instant expiresAt;
-
 }

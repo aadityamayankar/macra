@@ -20,7 +20,7 @@ public class Oauth2Client {
     @Id
     private String id;
     private String clientId;
-    private String clientSecret; //@TODO:
+    private String clientSecret; //@TODO: check if this type is okay to use
     private List<String> redirectUris;
     private List<String> scopes;
     private Instant modifiedAt;
