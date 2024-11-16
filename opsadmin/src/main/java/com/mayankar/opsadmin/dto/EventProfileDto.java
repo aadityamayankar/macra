@@ -1,14 +1,22 @@
 package com.mayankar.opsadmin.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mayankar.validation.Validator;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventProfileDto {
-    private Long id;
+    //@TODO: add a composite id check
+    //@TODO: add constaints to db
+    private String id;
     private String name;
     private String description;
     private String startDate;
     private String endDate;
+    @Size(max = Validator.MAX_LOCATION_LENGTH)
     private String location;
-    private Long cityId;
+    private String cityId;
+    private String cityName;
 }

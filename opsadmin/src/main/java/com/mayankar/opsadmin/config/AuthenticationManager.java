@@ -1,11 +1,13 @@
 package com.mayankar.opsadmin.config;
 
 import com.mayankar.dataaccess.cachedrepository.AuthnSessionRepository;
+import com.mayankar.model.AuthnSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
@@ -17,13 +19,18 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
-        return authnSessionRepository.getSession((String)authentication.getCredentials())
+        return authnSessionRepository.getSession((String) authentication.getCredentials())
                 .filter(Objects::nonNull)
-                .map(authnSession -> {
+                .flatMap(authnSession -> {
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(authnSession.getUserId(), authentication.getCredentials());
                     authenticationToken.setDetails(authnSession);
-                    return authenticationToken;
+
+                    return Mono.deferContextual(ctx -> {
+                        ServerWebExchange exchange = ctx.get(ServerWebExchange.class);
+                        exchange.getAttributes().put("authnSession", authnSession);
+                        return Mono.just(authenticationToken);
+                    });
                 });
     }
 }

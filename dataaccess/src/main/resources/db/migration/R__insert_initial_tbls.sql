@@ -71,12 +71,15 @@ BEGIN
         description TEXT,
         start_date TIMESTAMPTZ NOT NULL,
         end_date TIMESTAMPTZ NOT NULL,
-        location TEXT,
+        location TEXT NOT NULL,
         city_id BIGINT NOT NULL REFERENCES city_profile(id),
         modified_at TIMESTAMPTZ,
         created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        miscflags BIGINT NOT NULL DEFAULT 0
+        miscflags BIGINT NOT NULL DEFAULT 0,
+        UNIQUE (name, city_id)
     );
+
+    CREATE INDEX IF NOT EXISTS idx_event_profile_name_city ON event_profile(name, city_id);
 
 END;
 $$

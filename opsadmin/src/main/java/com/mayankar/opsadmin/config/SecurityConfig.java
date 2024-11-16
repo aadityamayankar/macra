@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
 import org.springframework.security.web.server.authorization.AuthorizationContext;
+import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Mono;
 
 @EnableWebFluxSecurity
