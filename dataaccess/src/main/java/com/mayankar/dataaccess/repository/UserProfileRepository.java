@@ -10,6 +10,8 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface UserProfileRepository extends ReactiveCrudRepository<UserProfile, Long>, BaseRepository {
 
+    String getAllUserProfiles = "SELECT * FROM user_profile";
+
     @Query("SELECT * FROM user_profile WHERE name = :name")
     Flux<UserProfile> findByName(String name);
 

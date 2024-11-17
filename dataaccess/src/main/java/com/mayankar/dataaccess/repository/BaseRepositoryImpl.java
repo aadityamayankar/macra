@@ -24,4 +24,9 @@ public class BaseRepositoryImpl implements BaseRepository {
         }
         return executeSpec.map((row, metaData) -> r2dbcEntityTemplate.getConverter().read(returnType, row, metaData)).all();
     }
+
+    @Override
+    public <R> Flux<R> search(String query, Class<R> returnType) {
+        return databaseClient.sql(query).map((row, metaData) -> r2dbcEntityTemplate.getConverter().read(returnType, row, metaData)).all();
+    }
 }
