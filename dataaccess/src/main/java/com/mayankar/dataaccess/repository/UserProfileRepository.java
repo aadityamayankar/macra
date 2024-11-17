@@ -8,7 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface UserProfileRepository extends ReactiveCrudRepository<UserProfile, Long> {
+public interface UserProfileRepository extends ReactiveCrudRepository<UserProfile, Long>, BaseRepository {
 
     @Query("SELECT * FROM user_profile WHERE name = :name")
     Flux<UserProfile> findByName(String name);

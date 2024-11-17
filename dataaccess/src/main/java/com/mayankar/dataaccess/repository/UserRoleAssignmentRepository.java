@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
 @Repository
-public interface UserRoleAssignmentRepository extends ReactiveCrudRepository<UserRoleAssignment, Long> {
+public interface UserRoleAssignmentRepository extends ReactiveCrudRepository<UserRoleAssignment, Long>, BaseRepository {
     @Query("SELECT * FROM user_role_assignment WHERE user_id = :userId")
     Flux<UserRoleAssignment> findByUserId(Long userId);
 }

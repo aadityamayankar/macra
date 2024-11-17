@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface Oauth2ClientRepository extends ReactiveCrudRepository<Oauth2Client, Long> {
+public interface Oauth2ClientRepository extends ReactiveCrudRepository<Oauth2Client, Long>, BaseRepository {
     @Query("SELECT * FROM oauth2_client WHERE client_id = :clientId")
     Mono<Oauth2Client> findByClientId(String clientId);
 }

@@ -9,8 +9,18 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface EventProfileRepository extends ReactiveCrudRepository<EventProfile, Long> {
+public interface EventProfileRepository extends ReactiveCrudRepository<EventProfile, Long>, BaseRepository {
     String getAllEventProfiles = "SELECT * FROM event_profile";
+
+    String getAllEventProfilesWithCity = "SELECT ep.*, cp.name as city_name FROM event_profile ep LEFT JOIN city_profile cp ON ep.city_id = cp.id";
+
+    String withName = " ep.name = :name ";
+
+    String withCityName = " cp.name = :city ";
+
+    String withStartDate = " ep.start_date >= :startDate ";
+
+    String withEndDate = " ep.end_date <= :endDate ";
 
     @Query("SELECT * FROM event_profile")
     Flux<EventProfile> getAllEventProfiles();
