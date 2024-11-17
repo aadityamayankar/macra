@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface UserPasswordInfoRepository extends ReactiveCrudRepository<UserPasswordInfo, Long> {
+public interface UserPasswordInfoRepository extends ReactiveCrudRepository<UserPasswordInfo, Long>, BaseRepository {
     @Query("SELECT * FROM user_password_info WHERE user_id = :userId")
     public Mono<UserPasswordInfo> findByUserId(Long userId);
 }

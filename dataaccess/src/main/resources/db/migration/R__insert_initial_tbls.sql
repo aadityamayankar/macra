@@ -4,8 +4,8 @@ $$
 BEGIN
     CREATE TABLE IF NOT EXISTS user_profile (
         id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL UNIQUE,
+        name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
         modified_at TIMESTAMPTZ,
         created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
         miscflags BIGINT NOT NULL DEFAULT 0
@@ -14,7 +14,7 @@ BEGIN
 
     CREATE TABLE IF NOT EXISTS role_profile (
         id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
+        name TEXT NOT NULL,
         value INT NOT NULL,
         modified_at TIMESTAMPTZ,
         created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -36,7 +36,7 @@ BEGIN
     CREATE TABLE IF NOT EXISTS user_password_info (
         id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         user_id BIGINT NOT NULL,
-        password_hash VARCHAR(255) NOT NULL,
+        password_hash TEXT NOT NULL,
         modified_at TIMESTAMPTZ,
         created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
         miscflags BIGINT NOT NULL DEFAULT 0,
@@ -45,8 +45,8 @@ BEGIN
 
     CREATE TABLE IF NOT EXISTS oauth2_client (
         id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        client_id VARCHAR(255) NOT NULL UNIQUE,
-        client_secret VARCHAR(255) NOT NULL,
+        client_id TEXT NOT NULL UNIQUE,
+        client_secret TEXT NOT NULL,
         redirect_uris TEXT[],
         scopes TEXT[],
         created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -55,6 +55,31 @@ BEGIN
     );
 
     CREATE INDEX IF NOT EXISTS idx_oauth2_client_client_id ON oauth2_client(client_id);
+    
+    CREATE TABLE IF NOT EXISTS city_profile (
+        id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        name TEXT NOT NULL,
+        country TEXT NOT NULL,
+        modified_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        miscflags BIGINT NOT NULL DEFAULT 0
+    );
+
+    CREATE TABLE IF NOT EXISTS event_profile (
+        id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT,
+        start_date TIMESTAMPTZ NOT NULL,
+        end_date TIMESTAMPTZ NOT NULL,
+        location TEXT NOT NULL,
+        city_id BIGINT NOT NULL REFERENCES city_profile(id),
+        modified_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        miscflags BIGINT NOT NULL DEFAULT 0,
+        UNIQUE (name, city_id)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_event_profile_name_city ON event_profile(name, city_id);
 
 END;
 $$

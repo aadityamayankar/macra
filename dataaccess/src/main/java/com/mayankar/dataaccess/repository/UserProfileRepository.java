@@ -8,11 +8,14 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface UserProfileRepository extends ReactiveCrudRepository<UserProfile, Long> {
+public interface UserProfileRepository extends ReactiveCrudRepository<UserProfile, Long>, BaseRepository {
 
     @Query("SELECT * FROM user_profile WHERE name = :name")
     Flux<UserProfile> findByName(String name);
 
     @Query("SELECT * FROM user_profile WHERE email = :email")
     Mono<UserProfile> findByEmail(String email);
+
+    @Query("SELECT * FROM user_profile WHERE id = :id")
+    Mono<UserProfile> getUserProfileById(Long id);
 }

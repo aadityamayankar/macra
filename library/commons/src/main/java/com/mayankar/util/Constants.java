@@ -13,6 +13,7 @@ public class Constants {
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "Bearer"; // REMEMBER TO USE BEARER + " " + token
     public static final Long OPS_USER_MISCFLAG = 1L<<30;
+    public static final Long DELETED_MISCFLAG = 1L<<31;
     public static final String READ = "read";
     public static final String WRITE = "write";
     public static final String OPENID = "openid";

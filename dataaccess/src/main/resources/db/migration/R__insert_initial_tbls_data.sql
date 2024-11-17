@@ -33,6 +33,20 @@ END;
 $$
 LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION insert_initial_cities()
+RETURNS VOID AS
+$$
+BEGIN
+    INSERT INTO city_profile (name, country, miscflags) VALUES ('Mumbai', 'India', 0);
+    INSERT INTO city_profile (name, country, miscflags) VALUES ('Delhi', 'India', 0);
+    INSERT INTO city_profile (name, country, miscflags) VALUES ('Bangalore', 'India', 0);
+    INSERT INTO city_profile (name, country, miscflags) VALUES ('Hyderabad', 'India', 0);
+    INSERT INTO city_profile (name, country, miscflags) VALUES ('Pune', 'India', 0);
+    INSERT INTO city_profile (name, country, miscflags) VALUES ('Jaipur', 'India', 0);
+END;
+$$
+LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION insert_initial_data()
 RETURNS VOID AS
 $$
@@ -40,6 +54,7 @@ BEGIN
     PERFORM insert_default_roles();
     PERFORM insert_oauth2_client();
     PERFORM insert_opsadmin_user();
+    PERFORM insert_initial_cities();
 END;
 $$
 LANGUAGE plpgsql;
@@ -48,3 +63,4 @@ DROP FUNCTION insert_initial_data();
 DROP FUNCTION insert_default_roles();
 DROP FUNCTION insert_oauth2_client();
 DROP FUNCTION insert_opsadmin_user();
+DROP FUNCTION insert_initial_cities();

@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface RoleProfileRepository extends ReactiveCrudRepository<RoleProfile, Long> {
+public interface RoleProfileRepository extends ReactiveCrudRepository<RoleProfile, Long>, BaseRepository {
 
     @Query("SELECT * FROM role_profile WHERE value = :value")
     Mono<RoleProfile> getRoleProfileByValue(Integer value);

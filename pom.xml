@@ -18,6 +18,7 @@
 		<module>auth</module>
 		<module>library</module>
 		<module>authz</module>
+		<module>opsadmin</module>
 	</modules>
 	<packaging>pom</packaging>
 	<url/>
