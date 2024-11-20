@@ -1,15 +1,13 @@
-package com.mayankar.opsadmin.mapper;
+package com.mayankar.mapper;
 
+import com.mayankar.dto.EventProfileDto;
 import com.mayankar.dto.EventProfileWithCity;
 import com.mayankar.model.EventProfile;
-import com.mayankar.opsadmin.dto.EventProfileDto;
 import com.mayankar.util.CompositeID;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.time.Instant;
-
-import static org.mapstruct.NullValuePropertyMappingStrategy.IGNORE;
 
 @Mapper(componentModel = "spring")
 public interface EventProfileMapper {
@@ -50,4 +48,7 @@ public interface EventProfileMapper {
 
     @InheritConfiguration(name = "toEventProfileDto")
     EventProfileDto toEventProfileDto(EventProfileWithCity eventProfileWithCity);
+
+    @InheritConfiguration(name = "toEventProfile")
+    EventProfile toEventProfile(EventProfileWithCity eventProfileWithCity);
 }

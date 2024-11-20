@@ -5,15 +5,15 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.Instant;
-
 @Data
 @NoArgsConstructor
-@Table("role_profile")
-public class RoleProfile extends BaseEntityProfile {
+@Table("ticket_profile")
+public class TicketProfile extends BaseEntityProfile {
     @Id
     private Long id;
-    private Integer value;
-    private String name;
-    private String description;
+    private Long eventId;
+    private String ticketType;
+    private Double price;
+    private Integer quantity;
+    private Integer availableQuantity;
 }

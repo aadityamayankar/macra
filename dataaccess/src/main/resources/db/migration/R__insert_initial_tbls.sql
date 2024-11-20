@@ -81,6 +81,32 @@ BEGIN
 
     CREATE INDEX IF NOT EXISTS idx_event_profile_name_city ON event_profile(name, city_id);
 
+    CREATE TABLE IF NOT EXISTS ticket_profile (
+        id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        event_id BIGINT NOT NULL REFERENCES event_profile(id),
+        ticket_type TEXT NOT NULL,
+        price DECIMAL NOT NULL,
+        quantity INT NOT NULL,
+        available_quantity INT NOT NULL,
+        modified_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        miscflags BIGINT NOT NULL DEFAULT 0,
+        UNIQUE (event_id, ticket_type)
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_ticket_profile_type_event_id ON ticket_profile(ticket_type, event_id);
+
+    CREATE TABLE IF NOT EXISTS user_ticket_assignment (
+        id BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        user_id BIGINT NOT NULL REFERENCES user_profile(id),
+        ticket_id BIGINT NOT NULL REFERENCES ticket_profile(id),
+        event_id BIGINT NOT NULL REFERENCES event_profile(id),
+        quantity INT NOT NULL,
+        modified_at TIMESTAMPTZ,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        miscflags BIGINT NOT NULL DEFAULT 0
+    );
+
 END;
 $$
 LANGUAGE plpgsql;

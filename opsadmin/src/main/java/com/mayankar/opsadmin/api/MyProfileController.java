@@ -1,8 +1,8 @@
 package com.mayankar.opsadmin.api;
 
 import com.mayankar.controller.BaseController;
+import com.mayankar.dto.UserProfileDto;
 import com.mayankar.model.AuthnSession;
-import com.mayankar.opsadmin.dto.UserProfileDto;
 import com.mayankar.opsadmin.service.MyProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

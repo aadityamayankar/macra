@@ -1,9 +1,11 @@
-package com.mayankar.opsadmin.dto;
+package com.mayankar.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mayankar.validation.Validator;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -19,4 +21,6 @@ public class EventProfileDto {
     private String location;
     private String cityId;
     private String cityName;
+
+    private List<TicketProfileDto> tickets;
 }

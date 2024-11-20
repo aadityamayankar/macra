@@ -10,12 +10,9 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @Table("city_profile")
-public class CityProfile {
+public class CityProfile extends BaseEntityProfile {
     @Id
     private Long id;
     private String name;
     private String country;
-    private Instant modifiedAt;
-    private Instant createdAt;
-    private Long miscflags;
 }

@@ -1,8 +1,6 @@
-package com.mayankar.opsadmin.dto;
+package com.mayankar.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.mayankar.validation.Validator;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data

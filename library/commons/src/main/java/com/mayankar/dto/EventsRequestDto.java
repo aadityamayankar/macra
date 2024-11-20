@@ -1,4 +1,4 @@
-package com.mayankar.opsadmin.dto;
+package com.mayankar.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -12,4 +12,5 @@ public class EventsRequestDto {
     private String name;
     private String startDate;
     private String endDate;
+    private Boolean deleted;
 }

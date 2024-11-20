@@ -16,14 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table("oauth2_client")
-public class Oauth2Client {
+public class Oauth2Client extends BaseEntityProfile {
     @Id
     private String id;
     private String clientId;
     private String clientSecret; //@TODO: check if this type is okay to use
     private List<String> redirectUris;
     private List<String> scopes;
-    private Instant modifiedAt;
-    private Instant createdAt;
-    private Long miscflags;
 }

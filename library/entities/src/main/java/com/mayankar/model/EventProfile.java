@@ -10,7 +10,7 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @Table("event_profile")
-public class EventProfile {
+public class EventProfile extends BaseEntityProfile {
     @Id
     private Long id;
     private String name;
@@ -19,7 +19,4 @@ public class EventProfile {
     private Instant endDate;
     private String location;
     private Long cityId;
-    private Instant modifiedAt;
-    private Instant createdAt;
-    private Long miscflags;
 }

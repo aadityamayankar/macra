@@ -1,9 +1,8 @@
-package com.mayankar.opsadmin.api;
+package com.mayankar.user.api;
 
-import com.mayankar.controller.BaseController;
 import com.mayankar.dto.EventProfileDto;
 import com.mayankar.dto.EventsRequestDto;
-import com.mayankar.opsadmin.service.EventProfileService;
+import com.mayankar.user.service.EventProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,11 @@ import static com.mayankar.controller.BaseController.API_V1;
 
 @RestController
 @RequestMapping(API_V1 + "/events")
-public class EventProfileController extends BaseController {
+public class EventProfileController {
     private static final Logger logger = LoggerFactory.getLogger(EventProfileController.class);
 
     @Autowired
-    private EventProfileService eventProfileService;
+    EventProfileService eventProfileService;
 
     //@TODO: pagination
     @GetMapping
@@ -37,7 +36,7 @@ public class EventProfileController extends BaseController {
                 .name(name)
                 .startDate(startDate)
                 .endDate(endDate)
-                .deleted(deleted)
+                .deleted(false)
                 .build();
         return eventProfileService.getAllEventProfiles(eventsRequestDto)
                 .doOnComplete(() -> logger.info("All events fetched successfully"))
@@ -52,27 +51,4 @@ public class EventProfileController extends BaseController {
                 .doOnError(throwable -> logger.error("Error fetching event"));
     }
 
-    @PostMapping
-    public Mono<EventProfileDto> createEventProfile(ServerWebExchange exchange, @RequestBody EventProfileDto eventProfileDto) {
-        logger.debug("EventProfileController::createEventProfile {}", eventProfileDto);
-        return eventProfileService.createEventProfile(eventProfileDto)
-                .doOnSuccess(eventProfile -> logger.info("Event {} created successfully", eventProfile.getName()))
-                .doOnError(throwable -> logger.error("Error creating event {}", eventProfileDto.getName()));
-    }
-
-    @DeleteMapping("/{id}")
-    public Mono<Void> deleteEventProfile(ServerWebExchange exchange, @PathVariable(value = "id") String id) {
-        logger.debug("EventProfileController::deleteEventProfile {}", id);
-        return eventProfileService.deleteEventProfile(id)
-                .doOnSuccess(aVoid -> logger.info("Event {} deleted successfully", id))
-                .doOnError(throwable -> logger.error("Error deleting event {}", id));
-    }
-
-    @PutMapping("/{id}")
-    public Mono<EventProfileDto> updateEventProfile(ServerWebExchange exchange, @PathVariable(value = "id") String id, @RequestParam(value = "ticket_updated", required = false, defaultValue = "false") Boolean ticketUpdated, @RequestBody EventProfileDto eventProfileDto) {
-        logger.debug("EventProfileController::updateEventProfile {}", id);
-        return eventProfileService.updateEventProfile(id, ticketUpdated, eventProfileDto)
-                .doOnSuccess(eventProfile -> logger.info("Event {} updated successfully", eventProfile.getName()))
-                .doOnError(throwable -> logger.error("Error updating event {}", id));
-    }
 }

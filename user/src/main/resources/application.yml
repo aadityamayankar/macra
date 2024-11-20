@@ -36,4 +36,4 @@ server:
   port: 8001
 logging:
   level:
-    root: info
+    root: debug
