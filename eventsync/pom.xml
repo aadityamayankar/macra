@@ -7,11 +7,10 @@
         <artifactId>ibento</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.mayankar</groupId>
-    <artifactId>user</artifactId>
+    <artifactId>eventsync</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>user</name>
-    <description>user</description>
+    <name>eventsync</name>
+    <description>eventsync</description>
     <url/>
     <licenses>
         <license/>
@@ -40,24 +39,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.mayankar</groupId>
-            <artifactId>commons</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mayankar</groupId>
-            <artifactId>dataaccess</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,9 +52,16 @@
             <version>1.5.6</version>
         </dependency>
         <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>4.28.0-RC1</version>
+            <groupId>com.mayankar</groupId>
+            <artifactId>commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mayankar</groupId>
+            <artifactId>dataaccess</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -81,7 +71,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.mayankar.opsadmin.OpsadminApplication</mainClass>
+                    <mainClass>com.mayankar.eventsync.EventsyncApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

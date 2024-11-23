@@ -27,4 +27,12 @@ public class ConfigProps {
     public String selfClientSecret;
     @Value("${spring.security.oauth2.client.registration.self.redirect-uri}")
     public String selfRedirectUri;
+    @Value("${spring.rabbitmq.host}")
+    public String rabbitMQHost;
+    @Value("${spring.rabbitmq.port}")
+    public Integer rabbitMQPort;
+    @Value("${spring.rabbitmq.username}")
+    public String rabbitMQUsername;
+    @Value("${spring.rabbitmq.password}")
+    public String rabbitMQPassword;
 }

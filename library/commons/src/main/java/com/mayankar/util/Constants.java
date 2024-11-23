@@ -20,4 +20,14 @@ public class Constants {
     public static final String CREATE = "create";
     public static final String UPDATE = "update";
     public static final String DELETE = "delete";
+    public static final String TICKET = "ticket";
+    public static final long MAX_TICKET_BOOKING_RETRIES = 3; // @TODO: make this configurable
+    public static final long TICKET_BOOKING_RETRY_INTERVAL = 5000L; //@TODO: make this configurable
+
+    public static class MessagingConstants {
+        public static final String EVENT_SYNC_EXCHANGE = "event-sync-exchange";
+        public static final String EVENT_SYNC_QUEUE = "event-sync-queue";
+        public static final String EVENT_SYNC_ROUTING_KEY = "event-sync-key";
+        public static final String PROTOBUF_CONTENT_TYPE = "application/x-protobuf";
+    }
 }

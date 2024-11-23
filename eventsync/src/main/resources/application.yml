@@ -1,6 +1,6 @@
 spring:
   application:
-    name: user
+    name: eventsync
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/postgres
     username: postgres
@@ -37,8 +37,11 @@ ibento:
       secret: secret
     refresh:
       timeout: 21600
+  eventsync:
+    ticket_reconciliation_interval: 30000 #testing
+#    ticket_reconciliation_interval: 60000
 server:
-  port: 8001
+  port: 10001
 logging:
   level:
     root: info

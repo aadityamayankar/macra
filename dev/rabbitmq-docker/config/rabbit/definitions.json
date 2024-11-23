@@ -1,0 +1,58 @@
+{
+  "rabbit_version": "3.9.10",
+  "rabbitmq_version": "3.9.10",
+    "users": [
+      {
+      "name": "admin",
+      "password_hash": "hElxOUmhFWP3sMvuSPjbzA0nVyHnvrk70VJiuDpkjxCLzPAG",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+      }
+  ],
+    "vhosts": [
+      {
+      "name": "/"
+      }
+  ],
+  "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [],
+  "policies": [],
+  "queues": [
+    {
+      "name": "event-sync-queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "event-sync-exchange",
+      "vhost": "/",
+      "type": "direct",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "event-sync-exchange",
+      "vhost": "/",
+      "destination": "event-sync-queue",
+      "destination_type": "queue",
+      "routing_key": "event-sync-key",
+      "arguments": {}
+    }
+  ]
+}

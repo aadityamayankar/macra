@@ -21,6 +21,11 @@ spring:
             client-id: ibento
             client-secret: $2a$10$RjU0BiGJ7m60WD2Q6X69jueuWcXWLRSeUAL1vVnkwoEC0mPYP7sji
             redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/self"
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
 ibento:
   authn:
     baseurl: http://localhost:7001
