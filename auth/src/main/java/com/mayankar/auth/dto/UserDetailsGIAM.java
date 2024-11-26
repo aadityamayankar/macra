@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 import lombok.NonNull;
 
-//@TODO: comeback to this later to see if we can configure the ObjectMapper in a better way
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)

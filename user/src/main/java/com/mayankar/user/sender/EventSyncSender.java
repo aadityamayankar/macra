@@ -18,11 +18,11 @@ import static com.mayankar.util.Constants.MessagingConstants.EVENT_SYNC_ROUTING_
 
 @Component
 public class EventSyncSender {
+    private static final Logger logger = LoggerFactory.getLogger(EventSyncSender.class);
 
     @Autowired
     private Sender sender;
 
-    private static final Logger logger = LoggerFactory.getLogger(EventSyncSender.class);
     @Autowired
     private MessagingUtil messagingUtil;
 

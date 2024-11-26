@@ -16,7 +16,7 @@ public class TicketProfileCacheRepository {
     ReactiveRedisService<TicketProfile> reactiveRedisService;
 
     public Mono<TicketProfile> saveTicketProfile(TicketProfile ticketProfile) {
-        return reactiveRedisService.save(TICKET_PROFILE_PREFIX, CompositeID.parseId(ticketProfile.getId()), ticketProfile);
+        return reactiveRedisService.persistentSave(TICKET_PROFILE_PREFIX, CompositeID.parseId(ticketProfile.getId()), ticketProfile);
     }
 
     public Mono<TicketProfile> getTicketProfile(String id) {

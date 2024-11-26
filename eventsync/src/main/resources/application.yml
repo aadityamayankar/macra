@@ -38,6 +38,8 @@ ibento:
     refresh:
       timeout: 21600
   eventsync:
+    ticket_reservation_cleanup_interval: 30000 #testing
+#    ticket_reservation_cleanup_interval: 300000
     ticket_reconciliation_interval: 30000 #testing
 #    ticket_reconciliation_interval: 60000
 server:

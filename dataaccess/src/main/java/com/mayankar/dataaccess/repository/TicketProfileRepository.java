@@ -18,6 +18,9 @@ public interface TicketProfileRepository extends ReactiveCrudRepository<TicketPr
     @Query("UPDATE ticket_profile SET miscflags = miscflags | " + MISC_FLAG_DELETED + " WHERE event_id = :eventId")
     Mono<Void> deleteTicketProfilesByEventId(Long eventId);
 
+    @Query("SELECT * FROM ticket_profile WHERE id = :id AND (miscflags & " + MISC_FLAG_DELETED + ") = 0")
+    Mono<TicketProfile> getTicketProfileById(Long id);
+
     @Query("SELECT * FROM ticket_profile WHERE event_id = :eventId AND (miscflags & " + MISC_FLAG_DELETED + ") = 0")
     Flux<TicketProfile> getTicketProfilesByEventId(Long eventId);
 
@@ -29,4 +32,7 @@ public interface TicketProfileRepository extends ReactiveCrudRepository<TicketPr
 
     @Query("SELECT * FROM ticket_profile WHERE modified_at > :instant")
     Flux<TicketProfile> getAllTicketProfilesUpdatedAfter(Instant instant);
+
+    @Query("SELECT * from ticket_profile WHERE miscflags & " + MISC_FLAG_DELETED + " = 0")
+    Flux<TicketProfile> getAllActiveTicketProfiles();
 }

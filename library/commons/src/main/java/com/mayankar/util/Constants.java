@@ -23,11 +23,24 @@ public class Constants {
     public static final String TICKET = "ticket";
     public static final long MAX_TICKET_BOOKING_RETRIES = 3; // @TODO: make this configurable
     public static final long TICKET_BOOKING_RETRY_INTERVAL = 5000L; //@TODO: make this configurable
+    public static final String PAYMENT_CAPTURED = "payment.captured";
 
     public static class MessagingConstants {
         public static final String EVENT_SYNC_EXCHANGE = "event-sync-exchange";
         public static final String EVENT_SYNC_QUEUE = "event-sync-queue";
         public static final String EVENT_SYNC_ROUTING_KEY = "event-sync-key";
+        public static final String PAYMENT_EVENT_EXCHANGE = "payment-event-exchange";
+        public static final String PAYMENT_EVENT_QUEUE = "payment-event-queue";
+        public static final String PAYMENT_EVENT_ROUTING_KEY = "payment-event-key";
         public static final String PROTOBUF_CONTENT_TYPE = "application/x-protobuf";
+    }
+
+    public static class PaymentConstants {
+        public static final String AMOUNT = "amount";
+        public static final String CURRENCY = "currency";
+        public static final String ORDER_ID = "order_id";
+        public static final String RECEIPT = "receipt";
+        public static final String NOTES = "notes";
+        public static final String CURRENCY_INR = "INR";
     }
 }

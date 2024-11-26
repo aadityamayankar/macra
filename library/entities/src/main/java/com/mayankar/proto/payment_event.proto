@@ -1,0 +1,9 @@
+syntax = "proto3";
+package com.mayankar.proto;
+option java_package = "com.mayankar.proto";
+option java_outer_classname = "PaymentEventMessage";
+
+message PaymentEvent {
+  string eventType = 1;
+  string eventPayload = 2;
+}

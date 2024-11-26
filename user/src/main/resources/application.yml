@@ -37,6 +37,12 @@ ibento:
       secret: secret
     refresh:
       timeout: 21600
+  user:
+#    @TODO: Move these creds to vault
+    razorpay:
+      key: rzp_test_3MPemd0jjfjnV8
+      secret: 4L0oeeBjQk8zdyrjrKtfYDae
+      webhook_secret: secret
 server:
   port: 8001
 logging:

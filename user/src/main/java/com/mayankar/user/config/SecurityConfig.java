@@ -28,7 +28,8 @@ public class SecurityConfig {
         return http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .addFilterAt(authenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/public/**").permitAll()
+                        //@TODO: remove the webhooks path and look into doing it properly
+                        .pathMatchers("/public/**", "/api/v1/webhooks/razorpay").permitAll()
                         .anyExchange().access(this::hasUserRole)
                 )
                 .build();

@@ -21,6 +21,10 @@ public class ReactiveRedisService <T> {
         return prefix + ":" + id;
     }
 
+    public Mono<T> persistentSave(String prefix, String id, T value) {
+        return reactiveRedisOperations.opsForValue().set(getKey(prefix, id), value).thenReturn(value);
+    }
+
     public Mono<T> save(String prefix, String id, T value) {
         return reactiveRedisOperations.opsForValue().set(getKey(prefix, id), value, Duration.ofSeconds(DEFAULT_EXPIRY)).thenReturn(value);
     }
