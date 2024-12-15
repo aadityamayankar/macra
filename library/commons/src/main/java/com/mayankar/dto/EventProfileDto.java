@@ -21,6 +21,7 @@ public class EventProfileDto {
     private String location;
     private String cityId;
     private String cityName;
+    private String cover;
 
     private List<TicketProfileDto> tickets;
 }

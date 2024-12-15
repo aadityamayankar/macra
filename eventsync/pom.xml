@@ -71,7 +71,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.mayankar.eventsync.EventsyncApplication</mainClass>
+                    <mainClass>com.mayankar.eventsync.EventSyncApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

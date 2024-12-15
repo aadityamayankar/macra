@@ -137,14 +137,9 @@ public class EventProfileService {
                                 if (!repositoryUtils.isDeleted(existingEventProfile)) {
                                     return Mono.error(new IllegalArgumentException("Event profile with name " + eventProfileDto1.getName() + " already exists in city " + eventProfileDto1.getCityId()));
                                 }
+                                updateExistingEventProfile(eventProfileDto1, existingEventProfile);
                                 existingEventProfile.setMiscflags(0L);
-                                existingEventProfile.setName(eventProfileDto1.getName());
-                                existingEventProfile.setStartDate(Instant.ofEpochSecond(Long.parseLong(eventProfileDto1.getStartDate())));
-                                existingEventProfile.setEndDate(Instant.ofEpochSecond(Long.parseLong(eventProfileDto1.getEndDate())));
-                                existingEventProfile.setLocation(eventProfileDto1.getLocation());
-                                existingEventProfile.setCityId(CompositeID.parseIdString(eventProfileDto1.getCityId()));
                                 existingEventProfile.setCreatedAt(Instant.now());
-                                existingEventProfile.setModifiedAt(Instant.now());
                                 return eventProfileRepository.save(existingEventProfile);
                             })
                             .switchIfEmpty(eventProfileRepository.save(eventProfileMapper.toEventProfile(eventProfileDto1))
@@ -155,6 +150,7 @@ public class EventProfileService {
                                                     .flatMap(ticketProfileDto -> {
                                                         ticketProfileDto.setEventId(CompositeID.parseId(eventProfile.getId()));
                                                         ticketProfileDto.setAvailableQuantity(ticketProfileDto.getQuantity());
+                                                        //@TODO: this will always create a new ticket profile, check if an already existing deleted profile can be used
                                                         return ticketProfileRepository.save(ticketProfileMapper.toTicketProfile(ticketProfileDto));
                                                     })
                                                     .then(Mono.just(eventProfile));
@@ -162,6 +158,16 @@ public class EventProfileService {
                                         return Mono.just(eventProfile);
                                     }));
                 }).thenReturn(eventProfileDto);
+    }
+
+    private void updateExistingEventProfile(EventProfileDto eventProfileDto1, EventProfile existingEventProfile) {
+        existingEventProfile.setName(eventProfileDto1.getName());
+        existingEventProfile.setStartDate(Instant.ofEpochSecond(Long.parseLong(eventProfileDto1.getStartDate())));
+        existingEventProfile.setEndDate(Instant.ofEpochSecond(Long.parseLong(eventProfileDto1.getEndDate())));
+        existingEventProfile.setLocation(eventProfileDto1.getLocation());
+        existingEventProfile.setCityId(CompositeID.parseIdString(eventProfileDto1.getCityId()));
+        existingEventProfile.setCover(eventProfileDto1.getCover());
+        existingEventProfile.setModifiedAt(Instant.now());
     }
 
     private Mono<EventProfileDto> validateEventProfile(EventProfileDto eventProfileDto) {
@@ -193,12 +199,7 @@ public class EventProfileService {
                     EventProfile existingEventProfile = eventProfileMapper.toEventProfile(existingEventProfileWithCity);
                     return validateEventProfile(eventProfileDto)
                             .flatMap(eventProfileDto1 -> {
-                                existingEventProfile.setName(eventProfileDto1.getName());
-                                existingEventProfile.setStartDate(Instant.ofEpochSecond(Long.parseLong(eventProfileDto1.getStartDate())));
-                                existingEventProfile.setEndDate(Instant.ofEpochSecond(Long.parseLong(eventProfileDto1.getEndDate())));
-                                existingEventProfile.setLocation(eventProfileDto1.getLocation());
-                                existingEventProfile.setCityId(CompositeID.parseIdString(eventProfileDto1.getCityId()));
-                                existingEventProfile.setModifiedAt(Instant.now());
+                                updateExistingEventProfile(eventProfileDto1, existingEventProfile);
                                 return eventProfileRepository.save(existingEventProfile);
                             });
                 })

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <title>Razorpay Test</title>
+</head>
+<body>
+<button id="pay-button">Pay Now</button>
+<script>
+    const options = {
+        key: "rzp_test_3MPemd0jjfjnV8", // Replace with your Razorpay key ID
+        amount: 15990, // Amount in paise (e.g., 159.90 INR = 15990 paise)
+        currency: "INR",
+        order_id: "order_PXPb2f9Xp2aMKz", // Replace with your order ID
+        name: "Test Payment",
+        description: "Test Transaction",
+        handler: function (response) {
+            alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+            console.log(response);
+        },
+        prefill: {
+            name: "John Doe",
+            email: "johndoe@example.com",
+            contact: "9999999999"
+        },
+        theme: {
+            color: "#3399cc"
+        }
+    };
+
+    const payButton = document.getElementById("pay-button");
+    payButton.onclick = function () {
+        const rzp = new Razorpay(options);
+        rzp.open();
+    };
+</script>
+</body>
+</html>

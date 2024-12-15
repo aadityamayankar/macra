@@ -64,10 +64,13 @@ public class TicketBookingService {
 
     @Autowired
     ObjectMapper objectMapper;
+
     @Autowired
     private PaymentOrderReservationMappingRepository paymentOrderReservationMappingRepository;
+
     @Autowired
     private TicketProfileRepository ticketProfileRepository;
+
     @Autowired
     private EventSyncSender eventSyncSender;
 

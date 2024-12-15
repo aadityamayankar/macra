@@ -7,7 +7,6 @@
         <artifactId>ibento</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.mayankar</groupId>
     <artifactId>user</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>user</name>
@@ -86,7 +85,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.mayankar.opsadmin.OpsadminApplication</mainClass>
+                    <mainClass>com.mayankar.user.UserApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

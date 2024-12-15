@@ -2,16 +2,20 @@ package com.mayankar.auth.service;
 
 import com.mayankar.auth.dto.UserLoginRequest;
 import com.mayankar.auth.dto.UserRegistrationRequest;
+import com.mayankar.dataaccess.cachedrepository.AuthnSessionRepository;
 import com.mayankar.dataaccess.repository.RoleProfileRepository;
 import com.mayankar.dataaccess.repository.UserPasswordInfoRepository;
 import com.mayankar.dataaccess.repository.UserProfileRepository;
 import com.mayankar.dataaccess.repository.UserRoleAssignmentRepository;
 import com.mayankar.dto.AuthCodeRequest;
 import com.mayankar.enums.UserRole;
+import com.mayankar.model.AuthnSession;
 import com.mayankar.model.UserPasswordInfo;
 import com.mayankar.model.UserProfile;
 import com.mayankar.model.UserRoleAssignment;
 import com.mayankar.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,20 +27,31 @@ import java.util.ArrayList;
 
 @Service
 public class AuthnService {
+
     @Autowired
     private UserProfileRepository userProfileRepository;
+
     @Autowired
     private DomainUtils domainUtils;
+
     @Autowired
     private UserPasswordInfoRepository userPasswordInfoRepository;
+
     @Autowired
     private PasswordEncoderUtil passwordEncoderUtil;
+
     @Autowired
     private UserRoleAssignmentRepository userRoleAssignmentRepository;
+
     @Autowired
     private RoleProfileRepository roleProfileRepository;
+
     @Autowired
     private ConfigProps configProps;
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthnService.class);
+    @Autowired
+    private AuthnSessionRepository authnSessionRepository;
 
     public Mono<UserProfile> registerUser(UserRegistrationRequest userRegistrationRequest) {
         return userProfileRepository.findByEmail(userRegistrationRequest.getEmail())
@@ -83,6 +98,18 @@ public class AuthnService {
                             }
                         })
                 );
+    }
+
+    public Mono<Boolean> logoutUser(AuthnSession authnSession) {
+        logger.debug("Logging out user: {}", authnSession.getUserId());
+        return authnSessionRepository.deleteSession(authnSession.getId())
+                .flatMap(sessionDeleted -> {
+                    if (sessionDeleted) {
+                        return Mono.just(true);
+                    } else {
+                        return Mono.error(new RuntimeException("Error logging out user"));
+                    }
+                });
     }
 
     public Mono<ResponseEntity<Void>> redirectToAuthorize(UserProfile userProfile, ServerWebExchange exchange) {

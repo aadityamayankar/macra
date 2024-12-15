@@ -39,3 +39,6 @@ ibento:
       timeout: 21600
 server:
   port: 6001
+logging:
+  level:
+    root: debug

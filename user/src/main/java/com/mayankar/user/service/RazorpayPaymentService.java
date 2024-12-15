@@ -23,7 +23,7 @@ public class RazorpayPaymentService {
 
     public Mono<Order> initiatePayment(String userId, TicketReservation ticketReservation) {
         JSONObject orderRequest = new JSONObject();
-        orderRequest.put(AMOUNT, ticketReservation.getTotalAmount());
+        orderRequest.put(AMOUNT, ticketReservation.getTotalAmount() * 100);
         orderRequest.put(CURRENCY, CURRENCY_INR);
         orderRequest.put(RECEIPT, ticketReservation.getId());
 

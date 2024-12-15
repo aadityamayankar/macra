@@ -19,4 +19,5 @@ public class EventProfile extends BaseEntityProfile {
     private Instant endDate;
     private String location;
     private Long cityId;
+    private String cover;
 }
