@@ -10,13 +10,10 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @Table("role_profile")
-public class RoleProfile {
+public class RoleProfile extends BaseEntityProfile {
     @Id
     private Long id;
     private Integer value;
     private String name;
     private String description;
-    private Instant modifiedAt;
-    private Instant createdAt;
-    private Long miscflags;
 }

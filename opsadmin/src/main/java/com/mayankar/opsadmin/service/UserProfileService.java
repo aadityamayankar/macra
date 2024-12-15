@@ -1,15 +1,14 @@
 package com.mayankar.opsadmin.service;
 
 import com.mayankar.dataaccess.repository.UserProfileRepository;
+import com.mayankar.dto.UserProfileDto;
+import com.mayankar.mapper.UserProfileMapper;
 import com.mayankar.model.UserProfile;
-import com.mayankar.opsadmin.dto.UserProfileDto;
-import com.mayankar.opsadmin.mapper.UserProfileMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Service
 public class UserProfileService {

@@ -1,6 +1,7 @@
 package com.mayankar.dataaccess.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mayankar.model.TicketReservation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -22,6 +23,18 @@ public class ReactiveRedisConfig {
                 RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
 
         RedisSerializationContext<String, Object> context = builder.value(serializer).build();
+
+        return new ReactiveRedisTemplate<>(factory, context);
+    }
+
+    @Bean
+    public ReactiveRedisTemplate<String, TicketReservation> ticketReservationReactiveRedisTemplate(ReactiveRedisConnectionFactory factory, ObjectMapper objectMapper) {
+        Jackson2JsonRedisSerializer<TicketReservation> serializer = new Jackson2JsonRedisSerializer<>(objectMapper, TicketReservation.class);
+
+        RedisSerializationContext.RedisSerializationContextBuilder<String, TicketReservation> builder =
+                RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
+
+        RedisSerializationContext<String, TicketReservation> context = builder.value(serializer).build();
 
         return new ReactiveRedisTemplate<>(factory, context);
     }

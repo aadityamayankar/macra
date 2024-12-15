@@ -14,12 +14,9 @@ import java.time.Instant;
 @AllArgsConstructor
 @Builder
 @Table("user_role_assignment")
-public class UserRoleAssignment {
+public class UserRoleAssignment extends BaseEntityProfile {
     @Id
     private Long id;
     private Long userId;
     private Long roleId;
-    private Instant modifiedAt;
-    private Instant createdAt;
-    private Long miscflags;
 }

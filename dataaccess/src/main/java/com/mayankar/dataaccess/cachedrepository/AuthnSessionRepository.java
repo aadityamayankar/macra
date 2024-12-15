@@ -12,8 +12,13 @@ import static com.mayankar.util.CacheConstants.AUTHN_SESSION_PREFIX;
 public class AuthnSessionRepository {
     @Autowired
     ReactiveRedisService<AuthnSession> reactiveRedisService;
+
     public Mono<AuthnSession> save(AuthnSession authnSession) {
         return reactiveRedisService.save(AUTHN_SESSION_PREFIX, authnSession.getId(), authnSession);
+    }
+
+    public Mono<Boolean> deleteSession(String id) {
+        return reactiveRedisService.delete(AUTHN_SESSION_PREFIX, id);
     }
 
     public Mono<AuthnSession> getSession(String id) {

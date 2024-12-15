@@ -1,8 +1,8 @@
 package com.mayankar.opsadmin.api;
 
 import com.mayankar.controller.BaseController;
-import com.mayankar.opsadmin.dto.EventProfileDto;
-import com.mayankar.opsadmin.dto.EventsRequestDto;
+import com.mayankar.dto.EventProfileDto;
+import com.mayankar.dto.EventsRequestDto;
 import com.mayankar.opsadmin.service.EventProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,19 +22,22 @@ public class EventProfileController extends BaseController {
     @Autowired
     private EventProfileService eventProfileService;
 
+    //@TODO: pagination
     @GetMapping
     public Flux<EventProfileDto> getAllEvents(ServerWebExchange exchange,
                                               @RequestParam(value = "city", required = false) String city,
                                               @RequestParam(value = "name", required = false) String name,
                                               @RequestParam(value = "startDate", required = false) String startDate,
-                                              @RequestParam(value = "endDate", required = false) String endDate
+                                              @RequestParam(value = "endDate", required = false) String endDate,
+                                              @RequestParam(value = "deleted", required = false, defaultValue = "false") Boolean deleted
     ) {
-        logger.debug("EventProfileController::getAllEvents city={} name={} startDate={} endDate={}", city, name, startDate, endDate);
+        logger.debug("EventProfileController::getAllEvents city={} name={} startDate={} endDate={} deleted={}", city, name, startDate, endDate, deleted);
         EventsRequestDto eventsRequestDto = EventsRequestDto.builder()
                 .city(city)
                 .name(name)
                 .startDate(startDate)
                 .endDate(endDate)
+                .deleted(deleted)
                 .build();
         return eventProfileService.getAllEventProfiles(eventsRequestDto)
                 .doOnComplete(() -> logger.info("All events fetched successfully"))
@@ -44,7 +47,9 @@ public class EventProfileController extends BaseController {
     @GetMapping("/{id}")
     public Mono<EventProfileDto> getEventById(ServerWebExchange exchange, @PathVariable(value = "id") String id) {
         logger.debug("EventProfileController::getEventById {}", id);
-        return eventProfileService.getEventProfileById(id);
+        return eventProfileService.getEventProfileById(id)
+                .doOnSuccess(eventProfileDto -> logger.info("Event fetched successfully"))
+                .doOnError(throwable -> logger.error("Error fetching event"));
     }
 
     @PostMapping
@@ -61,5 +66,13 @@ public class EventProfileController extends BaseController {
         return eventProfileService.deleteEventProfile(id)
                 .doOnSuccess(aVoid -> logger.info("Event {} deleted successfully", id))
                 .doOnError(throwable -> logger.error("Error deleting event {}", id));
+    }
+
+    @PutMapping("/{id}")
+    public Mono<EventProfileDto> updateEventProfile(ServerWebExchange exchange, @PathVariable(value = "id") String id, @RequestParam(value = "ticket_updated", required = false, defaultValue = "false") Boolean ticketUpdated, @RequestBody EventProfileDto eventProfileDto) {
+        logger.debug("EventProfileController::updateEventProfile {}", id);
+        return eventProfileService.updateEventProfile(id, ticketUpdated, eventProfileDto)
+                .doOnSuccess(eventProfile -> logger.info("Event {} updated successfully", eventProfile.getName()))
+                .doOnError(throwable -> logger.error("Error updating event {}", id));
     }
 }

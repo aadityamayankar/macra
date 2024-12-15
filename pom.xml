@@ -19,6 +19,8 @@
 		<module>library</module>
 		<module>authz</module>
 		<module>opsadmin</module>
+		<module>user</module>
+		<module>eventsync</module>
 	</modules>
 	<packaging>pom</packaging>
 	<url/>

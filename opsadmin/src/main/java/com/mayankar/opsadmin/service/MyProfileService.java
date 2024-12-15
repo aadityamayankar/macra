@@ -1,8 +1,8 @@
 package com.mayankar.opsadmin.service;
 
 import com.mayankar.dataaccess.repository.UserProfileRepository;
-import com.mayankar.opsadmin.dto.UserProfileDto;
-import com.mayankar.opsadmin.mapper.UserProfileMapper;
+import com.mayankar.dto.UserProfileDto;
+import com.mayankar.mapper.UserProfileMapper;
 import com.mayankar.util.CompositeID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

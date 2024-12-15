@@ -10,12 +10,9 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @Table("user_profile")
-public class UserProfile {
+public class UserProfile extends BaseEntityProfile {
     @Id
     private Long id;
     private String name;
     private String email;
-    private Instant modifiedAt;
-    private Instant createdAt;
-    private Long miscflags;
 }

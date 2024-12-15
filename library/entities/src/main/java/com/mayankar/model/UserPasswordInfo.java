@@ -11,12 +11,9 @@ import java.time.Instant;
 @Data
 @Builder
 @Table("user_password_info")
-public class UserPasswordInfo {
+public class UserPasswordInfo extends BaseEntityProfile {
     @Id
     private Long id;
     private Long userId;
     private String passwordHash;
-    private Instant modifiedAt;
-    private Instant createdAt;
-    private Long miscflags;
 }
