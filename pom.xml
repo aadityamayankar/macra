@@ -15,7 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 	<modules>
 		<module>dataaccess</module>
-		<module>auth</module>
+		<module>authn</module>
 		<module>library</module>
 		<module>authz</module>
 		<module>opsadmin</module>

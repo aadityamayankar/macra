@@ -1,5 +1,7 @@
 package com.mayankar.util;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class Constants {
     public static final String CODE = "code";
     public static final String CLIENT_ID = "client_id";
@@ -21,8 +23,10 @@ public class Constants {
     public static final String UPDATE = "update";
     public static final String DELETE = "delete";
     public static final String TICKET = "ticket";
-    public static final long MAX_TICKET_BOOKING_RETRIES = 3; // @TODO: make this configurable
-    public static final long TICKET_BOOKING_RETRY_INTERVAL = 5000L; //@TODO: make this configurable
+    @Value("${ibento.user.ticket.max_retries}")
+    public static final long MAX_TICKET_BOOKING_RETRIES = 3;
+    @Value("${ibento.user.ticket.retry_interval}")
+    public static final long TICKET_BOOKING_RETRY_INTERVAL = 5000L;
     public static final String PAYMENT_CAPTURED = "payment.captured";
 
     public static class MessagingConstants {

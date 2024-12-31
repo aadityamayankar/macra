@@ -33,10 +33,16 @@ public class TicketReconciliationService {
         logger.info("Trying to reconciling tickets...");
 
         lastSyncTimeRepository.getLastSyncTime(TICKET)
-                .flatMap(lastSyncTicketTime -> ticketProfileRepository.getAllTicketProfilesUpdatedAfter(lastSyncTicketTime)
-                        .flatMap(ticketProfile -> ticketProfileCacheRepository.saveTicketProfile(ticketProfile))
-                        .collectList()
-                        .map(List::size)).zipWhen(ticketsReconciled -> Mono.just(Instant.now()))
+                .flatMap(lastSyncTicketTime -> {
+                    logger.debug("Last sync time for tickets: {}", lastSyncTicketTime);
+                    return ticketProfileRepository.getAllTicketProfilesUpdatedAfter(lastSyncTicketTime)
+                            .flatMap(ticketProfile -> {
+                                logger.debug("Reconciling ticket {}", ticketProfile.getId());
+                                return ticketProfileCacheRepository.saveTicketProfile(ticketProfile);
+                            })
+                            .collectList()
+                            .map(List::size);
+                }).zipWhen(ticketsReconciled -> Mono.just(Instant.now()))
                 .flatMap(tuple2 -> lastSyncTimeRepository.saveLastSyncTime(TICKET, tuple2.getT2())
                         .map(lastSyncTime -> tuple2.getT1()))
                 .doOnSuccess(ticketsReconciled -> {

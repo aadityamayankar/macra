@@ -2,43 +2,46 @@ spring:
   application:
     name: authz
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: ${R2DBC_URL:r2dbc:postgresql://localhost:5432/postgres}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: 996208298744-in3qbmgh9b9bh1d1ffofcia3ot29ra6o.apps.googleusercontent.com
-            client-secret: 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
+            client-id: ${GOOGLE_CLIENT_ID:google_client_id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:google_client_secret}
             redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/google"
           self:
-            client-id: ibento
-            client-secret: $2a$10$RjU0BiGJ7m60WD2Q6X69jueuWcXWLRSeUAL1vVnkwoEC0mPYP7sji
+            client-id: ${SELF_CLIENT_ID:self_client_id}
+            client-secret: ${SELF_CLIENT_SECRET:self_client_secret}
             redirect-uri: "${ibento.authn.baseurl}/login/oauth2/code/self"
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: admin
-    password: admin
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin}
 ibento:
   authn:
-    baseurl: http://localhost:7001
+    baseurl: ${AUTHN_BASE_URL:http://localhost:7001}
     session:
-      timeout: 1800
+      timeout: ${SESSION_TIMEOUT:1800}
   authz:
+    baseurl: ${AUTHZ_BASE_URL:http://localhost:6001}
     code:
-      timeout: 300
-      secret: 9b66d12ad7f4c5dd784f5e4bd1509312
+      timeout: ${AUTHZ_CODE_TIMEOUT:300}
+      secret: ${AUTHZ_CODE_SECRET:secret}
     refresh:
-      timeout: 21600
+      timeout: ${AUTHZ_REFRESH_TIMEOUT:21600}
+  nextjs:
+    baseurl: ${NEXTJS_BASE_URL:http://localhost:3000}
 server:
   port: 6001
 logging:
   level:
-    root: debug
+    root: ${LOGGING_LEVEL:info}

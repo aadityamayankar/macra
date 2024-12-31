@@ -27,6 +27,4 @@ public class UserProfileController extends BaseController {
         logger.debug("UserProfileController::getUserProfiles");
         return userProfileService.getUserProfiles();
     }
-
-    //@TODO: activate / deactivate / delete user
 }

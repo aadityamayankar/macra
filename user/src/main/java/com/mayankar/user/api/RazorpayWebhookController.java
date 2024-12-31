@@ -16,7 +16,7 @@ import static com.mayankar.controller.BaseController.API_V1;
 @RestController
 @RequestMapping(API_V1 + "/webhooks/razorpay")
 public class RazorpayWebhookController extends BaseController {
-    private static Logger logger = LoggerFactory.getLogger(RazorpayWebhookController.class);
+    private static final Logger logger = LoggerFactory.getLogger(RazorpayWebhookController.class);
 
     @Autowired
     private PaymentEventSender paymentEventSender;

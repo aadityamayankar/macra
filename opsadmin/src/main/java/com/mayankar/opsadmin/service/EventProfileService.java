@@ -277,4 +277,3 @@ public class EventProfileService {
         return ticketProfilesByOperation;
     }
 }
-//@TODO: not null validations on eventprofile fields
