@@ -1,11 +1,11 @@
-# Ibento
+# Macra
 
-Ibento is an event management system built using Spring Boot (Webflux) and other technologies. This project includes multiple modules such as authentication, authorization, data access, user management, event synchronization, and operations administration.
+Macra is an event management system built using Spring Boot (Webflux) and other technologies. This project includes multiple modules such as authentication, authorization, data access, user management, event synchronization, and operations administration.
 
 ## Project Structure
 ```
-ibento 
-├── ibento-authentication 
+macra 
+├── macra-authentication 
     |── src 
         |── main 
             |── java 
@@ -17,13 +17,13 @@ ibento
                             |── dto 
                             |── exception 
                             |── service 
-├── ibento-authorization ...
-├── ibento-data-access ...
-├── ibento-dev ...
-├── ibento-library ...
-├── ibento-event-synchronization ...
-├── ibento-operations-administration ...
-└── ibento-user-management ...
+├── macra-authorization ...
+├── macra-data-access ...
+├── macra-dev ...
+├── macra-library ...
+├── macra-event-synchronization ...
+├── macra-operations-administration ...
+└── macra-user-management ...
 ```
 
 ### Modules
@@ -49,8 +49,8 @@ ibento
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/aadityamayankar/Ibento.git
-cd Ibento
+git clone https://github.com/aadityamayankar/Macra.git
+cd Macra
 ```
 
 ### Setup Environment Variables
@@ -103,7 +103,7 @@ mvn spring-boot:run
 
 ### Datbase Migration
 
-To run the database migration, navigate to the `ibento-data-access` module and execute the following command:
+To run the database migration, navigate to the `dataaccess` module and execute the following command:
 ```sh
 mvn clean flyway:migrate -Dflyway.configFiles=flyway.conf
 ```
