@@ -38,6 +38,6 @@ public class Oauth2ClientService {
                     }
                     return true;
                 })
-                .switchIfEmpty(Mono.error(new IllegalArgumentException("Invalid client_id, redirect_uri or scope"))); //@TODO: log the error but return a generic message
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Invalid client_id, redirect_uri or scope")));
     }
 }

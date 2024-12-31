@@ -10,8 +10,6 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class EventProfileDto {
-    //@TODO: add a composite id check
-    //@TODO: add constaints to db
     private String id;
     private String name;
     private String description;

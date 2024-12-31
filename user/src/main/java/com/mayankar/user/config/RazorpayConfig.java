@@ -17,7 +17,7 @@ public class RazorpayConfig {
     @Bean
     public RazorpayClient razorpayClient() {
         try {
-            return new RazorpayClient(razorpayKey, razorpaySecret, true); //@TODO: enabling logging for test mode. Disable later
+            return new RazorpayClient(razorpayKey, razorpaySecret, false);
         } catch (Exception e) {
             throw new RuntimeException("Error while creating Razorpay client", e);
         }

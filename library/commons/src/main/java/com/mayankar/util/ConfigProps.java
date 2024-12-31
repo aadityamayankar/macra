@@ -17,6 +17,8 @@ public class ConfigProps {
     public Long authnSessionDuration;
     @Value("${ibento.authz.code.timeout}")
     public Long authzCodeDuration;
+    @Value("${ibento.authz.baseurl}")
+    public String authzBaseUrl;
     @Value("${ibento.authz.code.secret}")
     public String authzCodeSecret;
     @Value("${ibento.authz.refresh.timeout}")
@@ -35,4 +37,6 @@ public class ConfigProps {
     public String rabbitMQUsername;
     @Value("${spring.rabbitmq.password}")
     public String rabbitMQPassword;
+    @Value("${ibento.nextjs.baseurl}")
+    public String nextJSBaseUrl;
 }

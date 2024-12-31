@@ -15,11 +15,9 @@ public class PasswordEncoderUtil {
         return bCryptPasswordEncoder.matches(password, encodedPassword);
     }
 
-//    /*
     public static void main(String[] args) {
         PasswordEncoderUtil passwordEncoderUtil = new PasswordEncoderUtil();
         String encodedPassword = passwordEncoderUtil.encodePassword("secret");
         System.out.println(encodedPassword);
     }
-//    */
 }
