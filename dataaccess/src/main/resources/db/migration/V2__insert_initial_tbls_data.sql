@@ -8,7 +8,7 @@ BEGIN
     INSERT INTO user_profile (name, email, miscflags) VALUES ('opsadmin', 'opsadmin@ibento.com', 1<<30) RETURNING id INTO v_opsadmin_user_id;
     SELECT id INTO v_opsadmin_role_id FROM role_profile WHERE value = 1;
     INSERT INTO user_role_assignment (user_id, role_id) VALUES (v_opsadmin_user_id, v_opsadmin_role_id);
-    INSERT INTO user_password_info (user_id, password_hash) VALUES (v_opsadmin_user_id, '$2a$10$RJP5kiuGJ.jbqySGjzUqBenGjbBrBjB8h73Je4hfJZObCHreBYNNu'); -- password
+    INSERT INTO user_password_info (user_id, password_hash) VALUES (v_opsadmin_user_id, '$2a$10$RJP5kiuGJ.jbqySGjzUqBenGjbBrBjB8h73Je4hfJZObCHreBYNNu'); -- dummy password
 END;
 $$
 LANGUAGE plpgsql;
@@ -29,6 +29,7 @@ $$
 BEGIN
     INSERT INTO oauth2_client (client_id, client_secret, redirect_uris, scopes) -- secret
     VALUES ('ibento', '$2a$10$RJP5kiuGJ.jbqySGjzUqBenGjbBrBjB8h73Je4hfJZObCHreBYNNu', '{http://localhost:7001/login/oauth2/code/self}', '{read, write, openid}');
+    -- dummy secret
     -- redirect uri needs to be env specific
 END;
 $$
