@@ -1,48 +1,99 @@
 # Macra
 
-Macra is an event management system built using Spring Boot (Webflux) and other technologies. This project includes multiple modules such as authentication, authorization, data access, user management, event synchronization, and operations administration.
+Macra is an event management system built with Spring Boot (Webflux), Nextjs[^1], and Kubernetes[^2]. It is a microservices-based architecture that consists of multiple modules, each handling a specific set of operations. 
+
+The system is built with the following principles in mind:
+
+- **Microservices**: Multiple modules, each handling a specific set of responsibilities. 
+- **Event-Driven Architecture**: Ticket booking system is designed to be event-driven, with modules communicating over RabbitMQ.
+- **Security**: Designed to be secure, following the OAuth2.0 standard, and session management.
+- **Scalability**: Designed to be scalable, with each module being horizontally scalable.
+- **Fault-Tolerance**: Designed to be fault-tolerant, with each module being resilient to failures.
+- **High Availability**: Designed to be highly available, with each module being redundant.
+
+## Table of Contents
+
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Modules](#modules)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [References](#references)
+
+## Features
+
+### User Authentication and Authorization
+The system offers a robust self-hosted authentication and authorization system, supporting user credential management and OAuth 2.0 Authorization Code Grant flow. Additionally, it integrates with Google for seamless and secure sign-in using Google accounts.
+
+### Secure Session Management
+The system employs cookie-based session management to maintain user sessions securely and efficiently. Timed authentication sessions are stored in a distributed cache, ensuring quick access and automatic expiration of inactive sessions for enhanced security.
+
+### Distributed Cache Lock Mechanism
+To prevent overbooking, we use a time-based distributed cache lock mechanism for ticket reservations. This ensures that multiple users cannot reserve the same ticket simultaneously, providing a smooth booking experience.
+
+### Event-Driven Ticket Booking System
+The ticket booking system is designed to be event-driven, utilizing RabbitMQ for handling booking events. This architecture ensures high performance, scalability, and reliability by processing booking requests asynchronously.
+
+### Razorpay Payment Integration
+System integrates with Razorpay for secure and seamless payment processing. Users can make payments using various methods, including credit/debit cards, net banking, UPI, and wallets, ensuring a flexible and user-friendly payment experience.
+
+### Data Integrity and Consistency
+The system implements soft deletion of records, allowing data to be marked as deleted without physical removal from the database. Additionally, a scheduled ticket reconciliation mechanism ensures consistency between the database and the cache, maintaining data integrity and reliability.
+
+**Note**: To comply with the GDPR, the data is anonymized with the help of a utility tool after a certain period, ensuring user privacy and data protection.
+
+### Scalability and Fault Tolerance
+Designed to be horizontally scalable, it is ensured that each module can scale independently to handle increased load. The system is also fault-tolerant, with modules resilient to failures and designed for high availability through redundancy.
+
+### Logging and Monitoring
+SLF4J is used for logging, providing a unified logging interface for monitoring and debugging the application effectively. This helps in maintaining the health and performance of the system.
 
 ## Project Structure
 ```
 macra 
-├── macra-authentication 
+├── authn
     |── src 
         |── main 
             |── java 
                 |── com 
                     |── mayankar 
                         |── authn 
-                            |── api 
-                            |── config 
-                            |── dto 
-                            |── exception 
-                            |── service 
-├── macra-authorization ...
-├── macra-data-access ...
-├── macra-dev ...
-├── macra-library ...
-├── macra-event-synchronization ...
-├── macra-operations-administration ...
-└── macra-user-management ...
+                            └── ...
+├── authz
+├── dataaccess
+├── dev
+	|── postgres-db-docker
+		└── docker-compose.yml
+	└── ...
+├── eventsync
+├── library
+	|── commons
+		└── ...
+	└── entities
+		└── ...
+├── opsadmin
+|── user
+└── ...
 ```
 
 ### Modules
 
-- **authn**: Handles authentication services.
-- **authz**: Manages authorization services.
-- **dataaccess**: Provides data access and repository services.
+- **authn**: Handles authentication.
+- **authz**: Manages authorization.
+- **dataaccess**: Contains the canonical data model and repositories.
 - **dev**: Contains docker-compose files for development.
-- **eventsync**: Synchronizes event data.
+- **eventsync**: Synchronizes the ticket reservations with redis cache and handles ticket booking events.
 - **library**: Contains shared libraries and utilities.
-- **opsadmin**: Administers operational tasks.
-- **user**: Manages user-related services.
+- **opsadmin**: Handles operational administration tasks.
+- **user**: Manages user-related operations.
 
 ## Prerequisites
 
 - Java 21
 - Maven 3.9.9
-- PostgreSQL
-- RabbitMQ
+- PostgreSQL 16
+- RabbitMQ 3-management
 
 ## Getting Started
 
@@ -94,6 +145,28 @@ Create a `.env` file in the root directory and add the following environment var
 mvn clean install
 ```
 
+### Run the infrastructure services 
+
+Navigate to the `dev` module and start the docker-compose files:
+
+```sh
+cd dev
+cd postgres-db-docker &
+docker-compose up
+cd ../rabbitmq-docker &
+docker-compose up
+cd ../redis-docker &
+docker-compose up
+```
+
+### Migrate the database
+
+Navigate to the `dataaccess` module and run the database migration:
+
+```sh
+mvn clean flyway:clean flyway:migrate -Dflyway.configFiles=flyway.conf
+```
+
 ### Run the project
 
 Navigate to each module you want to run and execute the following command:
@@ -101,31 +174,37 @@ Navigate to each module you want to run and execute the following command:
 mvn spring-boot:run
 ```
 
-### Datbase Migration
-
-To run the database migration, navigate to the `dataaccess` module and execute the following command:
-```sh
-mvn clean flyway:migrate -Dflyway.configFiles=flyway.conf
-```
-
 ## Usage
 
-### Authentication
+The services can be accessed at the following URLs:
 
-The authorization service manages user roles and permissions. It is available at `http://localhost:7001`.
+| Service Name | URL |
+|--------------|-----|
+| authn				 | http://localhost:7001 |
+| authz				 | http://localhost:6001 |
+| user				 | http://localhost:8001 |
+| opsadmin		 | http://localhost:9001 |
+| eventsync		 | http://localhost:10001 |
 
-### Authorization
+To access the database, use the psql command with the password `postgres`:
 
-The authorization service manages user roles and permissions. It is available at `http://localhost:6001`.
+```sh
+psql -h localhost -U postgres -p 5432 -d postgres
+```
 
-### User
+To access the RabbitMQ management console, navigate to `http://localhost:15672` and login with the following credentials:
 
-The user service manages user-related operations. It is available at `http://localhost:8001`.
+- Username: `admin`
+- Password: `admin`
 
-### Operations Administration
+To access the redis cache, use the redis-cli command:
 
-The operations administration service manages operational tasks. It is available at `http://localhost:9001`.
+```sh
+redis-cli -h localhost -p 6379
+```
 
-### Event Sync
+## References
 
-The event synchronization service synchronizes event data. It takes care of the clearing up stale ticket reservations, and redis cache concilliation. It is available at `http://localhost:10001`.
+[^1]: [macra-fe](https://github.com/aadityamayankar/macra-fe) - Frontend repository 
+
+[^2]: [macra-k8](https://github.com/aadityamayankar/macra-k8) - Kubernetes repository
