@@ -205,6 +205,10 @@ To access the redis cache, use the redis-cli command:
 redis-cli -h localhost -p 6379
 ```
 
+## License
+
+This project is licensed under the MIT License.
+
 ## References
 
 [^1]: [macra-fe](https://github.com/aadityamayankar/macra-fe) - Frontend repository 
