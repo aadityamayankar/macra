@@ -2,6 +2,8 @@
 
 Macra is an event management system built with Spring Boot (Webflux), Nextjs[^1], and Kubernetes[^2]. It is a microservices-based architecture that consists of multiple modules, each handling a specific set of operations. 
 
+<img src="https://github.com/user-attachments/assets/54cb41d1-e9ad-4959-88c4-bc79c143d32b" width="100%" />
+
 The system is built with the following principles in mind:
 
 - **Microservices**: Multiple modules, each handling a specific set of responsibilities. 
