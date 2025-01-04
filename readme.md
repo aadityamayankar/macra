@@ -13,6 +13,13 @@ The system is built with the following principles in mind:
 - **Fault-Tolerance**: Designed to be fault-tolerant, with each module being resilient to failures.
 - **High Availability**: Designed to be highly available, with each module being redundant.
 
+Software requirements document: [here](https://docs.google.com/document/d/16kN-dNNyIGlELAH5iz33bxf3L2K8pikhJNp24A4VI0c/edit?usp=sharing)
+
+Design document: [here](https://docs.google.com/document/d/1woZ_ILhgP8VbSZyOP-MTnl93qgWRW8__AlODFP00SrQ/edit?usp=sharing)
+
+System Architecture
+<img src="https://github.com/user-attachments/assets/02fd01e0-4128-4531-977d-de17834bfd8d" width="100%" />
+
 ## Table of Contents
 
 - [Features](#features)
