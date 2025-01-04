@@ -20,6 +20,11 @@ Design document: [here](https://docs.google.com/document/d/1woZ_ILhgP8VbSZyOP-MT
 System Architecture
 <img src="https://github.com/user-attachments/assets/02fd01e0-4128-4531-977d-de17834bfd8d" width="100%" />
 
+---
+
+Data Flow
+<img src="https://github.com/user-attachments/assets/5be57f2c-6e38-4254-bcde-22b0928bcf87" width="100%" />
+
 ## Table of Contents
 
 - [Features](#features)
